@@ -10,7 +10,7 @@
 graph TD
     Client((Клиент)) -- 80/443 --> Nginx[Nginx Proxy]
     Nginx -- /pgadmin --> pgAdmin[pgAdmin 4]
-    Nginx -- / --> Backend[Backend API (в планах)]
+    Nginx -- / --> Backend["Backend API (в планах)"]
     pgAdmin -- internal --> Postgres[PostgreSQL 16]
     Registry[Docker Registry] -- 5000 --> Client
     Watchtower[Watchtower] -- monitoring --> AllContainers[Все контейнеры]
