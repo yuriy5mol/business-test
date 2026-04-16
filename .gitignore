@@ -1,2 +1,27 @@
+# Секреты
 .env
 auth/htpasswd
+screenshots/
+*.env.*
+
+# Временные файлы деплоя
+*.tar
+*_tmp.tar
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/.env
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+logs/

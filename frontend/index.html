@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Оставьте заявку — Начните сотрудничество</title>
+    <meta name="description"
+        content="Заполните форму заявки — мы изучим вашу задачу и свяжемся удобным для вас способом." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+
+    <!-- Animated background -->
+    <canvas id="bubbles-canvas"></canvas>
+
+    <main class="page-wrapper">
+        <header class="page-header">
+            <h1 class="logo">Ваш бизнес-партнёр</h1>
+            <p class="tagline">Расскажите о задаче — мы найдём решение</p>
+        </header>
+
+        <section class="form-card" aria-label="Форма заявки">
+
+            <!-- Step indicator -->
+            <div class="steps" aria-label="Шаги формы">
+                <button class="step active" data-step="1" aria-label="Шаг 1 — Контакты">1</button>
+                <div class="step-line"></div>
+                <button class="step" data-step="2" aria-label="Шаг 2 — Бизнес">2</button>
+                <div class="step-line"></div>
+                <button class="step" data-step="3" aria-label="Шаг 3 — Задача">3</button>
+                <div class="step-line"></div>
+                <button class="step" data-step="4" aria-label="Шаг 4 — Связь">4</button>
+            </div>
+
+            <form id="lead-form" novalidate>
+
+                <!-- Step 1: Contacts -->
+                <fieldset class="step-panel active" data-panel="1">
+                    <legend class="step-title">Контактные данные</legend>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="first_name">Имя <span class="req">*</span></label>
+                            <input id="first_name" name="first_name" type="text" placeholder="Александр" required
+                                autocomplete="given-name" />
+                        </div>
+                        <div class="field">
+                            <label for="last_name">Фамилия <span class="req">*</span></label>
+                            <input id="last_name" name="last_name" type="text" placeholder="Иванов" required
+                                autocomplete="family-name" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="middle_name">Отчество</label>
+                        <input id="middle_name" name="middle_name" type="text" placeholder="Сергеевич"
+                            autocomplete="additional-name" />
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="email">E-mail</label>
+                            <input id="email" name="email" type="email" placeholder="email@company.ru"
+                                autocomplete="email" />
+                        </div>
+                        <div class="field">
+                            <label for="phone">Телефон</label>
+                            <input id="phone" name="phone" type="tel" placeholder="+7 (999) 000-00-00"
+                                autocomplete="tel" />
+                        </div>
+                    </div>
+
+                    <div class="step-nav">
+                        <span></span>
+                        <button type="button" class="btn-next" data-goto="2">Далее →</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 2: Business info -->
+                <fieldset class="step-panel" data-panel="2">
+                    <legend class="step-title">О вашем бизнесе</legend>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="business_niche">Ниша бизнеса</label>
+                            <input id="business_niche" name="business_niche" type="text"
+                                placeholder="Например: e-commerce, логистика…" />
+                        </div>
+                        <div class="field">
+                            <label for="company_size">Размер компании</label>
+                            <select id="company_size" name="company_size">
+                                <option value="">— выберите —</option>
+                                <option value="solo">Я один</option>
+                                <option value="2-10">2–10 сотрудников</option>
+                                <option value="11-50">11–50 сотрудников</option>
+                                <option value="50+">Более 50</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="role">Кто вы в компании?</label>
+                        <div class="radio-group" id="role" role="radiogroup" aria-labelledby="role-label">
+                            <label class="radio-option">
+                                <input type="radio" name="role" value="employee" id="role_employee" />
+                                <span>Сотрудник</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="role" value="manager" id="role_manager" />
+                                <span>Руководитель</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="role" value="owner" id="role_owner" />
+                                <span>Владелец</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="business_info">Коротко о бизнесе</label>
+                        <textarea id="business_info" name="business_info" rows="3"
+                            placeholder="Чем занимается компания, её особенности…"></textarea>
+                    </div>
+
+                    <div class="step-nav">
+                        <button type="button" class="btn-back" data-goto="1">← Назад</button>
+                        <button type="button" class="btn-next" data-goto="3">Далее →</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 3: Task -->
+                <fieldset class="step-panel" data-panel="3">
+                    <legend class="step-title">Ваша задача</legend>
+
+                    <div class="field">
+                        <label for="service_id">Интересующая услуга <span class="req">*</span></label>
+                        <div id="services-container">
+                            <select id="service_id" name="service_id" required>
+                                <option value="">Загрузка услуг...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="task_volume">Объём задачи</label>
+                            <select id="task_volume" name="task_volume">
+                                <option value="">— выберите —</option>
+                                <option value="small">Небольшой</option>
+                                <option value="medium">Средний</option>
+                                <option value="large">Крупный</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="task_deadline">Когда нужен результат</label>
+                            <input id="task_deadline" name="task_deadline" type="text"
+                                placeholder="Например: через 2 месяца" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="budget">
+                            Бюджет: <strong id="budget-label">250 000 ₽</strong>
+                        </label>
+                        <input id="budget" name="budget" type="range" min="50000" max="5000000" step="50000"
+                            value="250000" class="slider" aria-valuenow="250000" aria-valuemin="50000"
+                            aria-valuemax="5000000" />
+                        <div class="slider-bounds">
+                            <span>50 000 ₽</span>
+                            <span>5 000 000 ₽</span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="comments">Комментарии</label>
+                        <textarea id="comments" name="comments" rows="3"
+                            placeholder="Дополнительные детали, пожелания…"></textarea>
+                    </div>
+
+                    <div class="step-nav">
+                        <button type="button" class="btn-back" data-goto="2">← Назад</button>
+                        <button type="button" class="btn-next" data-goto="4">Далее →</button>
+                    </div>
+                </fieldset>
+
+                <!-- Step 4: Contact preferences -->
+                <fieldset class="step-panel" data-panel="4">
+                    <legend class="step-title">Способ связи</legend>
+
+                    <div class="field">
+                        <label for="preferred_contact">Предпочтительный способ</label>
+                        <div class="radio-group" id="preferred_contact" role="radiogroup">
+                            <label class="radio-option">
+                                <input type="radio" name="preferred_contact" value="Телефон" id="contact_phone" />
+                                <span>📞 Телефон</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="preferred_contact" value="WhatsApp" id="contact_wa" />
+                                <span>💬 WhatsApp</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="preferred_contact" value="Telegram" id="contact_tg" />
+                                <span>✈️ Telegram</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="preferred_contact" value="E-mail" id="contact_email" />
+                                <span>✉️ E-mail</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="convenient_time">Удобное время для связи</label>
+                        <input id="convenient_time" name="convenient_time" type="text"
+                            placeholder="Например: будни с 10:00 до 18:00" />
+                    </div>
+
+                    <div class="step-nav">
+                        <button type="button" class="btn-back" data-goto="3">← Назад</button>
+                        <button type="submit" class="btn-submit" id="submit-btn">
+                            <span class="btn-text">Отправить заявку</span>
+                            <span class="btn-loader" hidden>⏳</span>
+                        </button>
+                    </div>
+                </fieldset>
+
+            </form>
+
+            <!-- Success / error states -->
+            <div class="result-state" id="state-success" hidden>
+                <div class="result-icon">✦</div>
+                <h2>Заявка принята!</h2>
+                <p>Мы свяжемся с вами в ближайшее время удобным способом.</p>
+                <button class="btn-reset" id="btn-reset">Отправить ещё одну</button>
+            </div>
+
+            <div class="result-state" id="state-error" hidden>
+                <div class="result-icon error">✕</div>
+                <h2>Что-то пошло не так</h2>
+                <p id="error-text">Пожалуйста, попробуйте снова.</p>
+                <button class="btn-reset" id="btn-retry">Попробовать снова</button>
+            </div>
+
+        </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

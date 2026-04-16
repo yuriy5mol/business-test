@@ -1,67 +1,60 @@
 # Business Cloud Infrastructure
 
-Проект по созданию облачной инфраструктуры с использованием Docker Compose, Nginx и системы автоматического обновления контейнеров.
+Проект по созданию облачной инфраструктуры с использованием Docker Compose, Nginx и системы автоматического обновления контейнеров (Watchtower).
 
 ## 🏗 Архитектура проекта
 
-Проект представляет собой готовую среду для развертывания веб-приложений с базой данных, панелью управления и собственным Docker Registry.
+Система построена на принципах контейнеризации и автоматического деплоя через приватный реестр (Registry).
 
 ```mermaid
 graph TD
-    Client((Клиент)) -- 80/443 --> Nginx[Nginx Proxy]
-    Nginx -- /pgadmin --> pgAdmin[pgAdmin 4]
-    Nginx -- / --> Backend["Backend API (в планах)"]
-    pgAdmin -- internal --> Postgres[PostgreSQL 16]
-    Registry[Docker Registry] -- 5000 --> Client
-    Watchtower[Watchtower] -- monitoring --> AllContainers[Все контейнеры]
+    Client((Клиент)) -- 80 --> Nginx[Nginx Proxy]
+    Nginx -- /api --> Backend[FastAPI Backend]
+    Nginx -- / --> Frontend[Vite/Nginx Frontend]
+    Backend -- internal --> Postgres[PostgreSQL 16]
+    pgAdmin -- internal --> Postgres
+    Registry[Private Registry] -- pulls --> AllContainers[Все контейнеры]
+    Watchtower[Watchtower] -- monitoring --> AllContainers
 ```
 
 ## 🛠 Компоненты
 
-- **Nginx**: Единая точка входа, проксирование трафика.
-- **PostgreSQL 16**: Основное хранилище данных.
-- **pgAdmin 4**: Веб-интерфейс для управления базой данных.
-- **Docker Registry**: Локальное хранилище для ваших Docker-образов.
-- **Watchtower**: Автоматически обновляет контейнеры при появлении новых версий образов в реестре.
+- **Nginx Proxy**: Единая точка входа, раздача фронтенда и проксирование API.
+- **FastAPI Backend**: Основная логика приложения.
+- **Vite Frontend**: Современный интерфейс пользователя.
+- **PostgreSQL 16**: Хранилище данных.
+- **Docker Registry**: Приватное хранилище образов на сервере.
+- **Watchtower**: Автоматически обновляет запущенные контейнеры при пуше новых образов в реестр.
 
-## 🚀 Быстрый старт
+## 🚀 Деплой и обновления
 
-### Требования
-- Установленный Docker и Docker Compose.
-- Настроенный SSH-доступ к серверу.
+Проект настроен на полуавтоматический деплой с вашего компьютера прямо на сервер.
 
-### Установка
-1. Клонируйте репозиторий:
+### Использование Makefile (если установлен make):
+```bash
+make deploy
+```
+
+### Использование PowerShell (на Windows):
+```powershell
+./deploy.ps1
+```
+
+**Что происходит при запуске:**
+1. Собирается фронтенд (`npm run build`).
+2. Собираются Docker-образы.
+3. Образы упаковываются и передаются на сервер через SSH-контекст.
+4. Watchtower на сервере видит обновление и перезапускает контейнеры.
+
+## 🔧 Настройка
+1. Скопируйте `.env.example` в `.env` и укажите свои пароли.
+2. Создайте файл аутентификации для реестра: `htpasswd -Bc auth/htpasswd admin`.
+3. Настройте Docker Context для удаленного сервера:
    ```bash
-   git clone https://github.com/ваш-аккаунт/business-test.git
-   cd business-test
-   ```
-
-2. Подготовьте переменные окружения:
-   ```bash
-   cp .env.example .env
-   # Отредактируйте .env, установив свои пароли
-   ```
-
-3. Настройте аутентификацию для реестра:
-   ```bash
-   # Если не установлен htpasswd: sudo apt install apache2-utils
-   mkdir -p auth
-   htpasswd -Bc auth/htpasswd admin
-   ```
-
-4. Запустите инфраструктуру:
-   ```bash
-   docker compose up -d
+   docker context create remote --docker "host=ssh://user@your-server-ip"
    ```
 
 ## 🔐 Безопасность
-- Пароли хранятся только в `.env` (исключен из Git).
-- База данных Postgres доступна только внутри внутренней сети Docker и не проброшена на внешние порты.
-- pgAdmin защищен авторизацией и работает через прокси.
-
-## 📅 Планы по доработке
-- [ ] Добавить сервис Backend (Node.js/Python).
-- [ ] Добавить сервис Frontend (React/Vue/Vite).
-- [ ] Настройка SSL (Certbot/Let's Encrypt).
-- [ ] Интеграция CI/CD через GitHub Actions.
+- Доступ к базе данных закрыт извне (только внутри внутренней сети Docker).
+- Реестр защищен авторизацией Basic Auth.
+- Деплой происходит через зашифрованное SSH-соединение.

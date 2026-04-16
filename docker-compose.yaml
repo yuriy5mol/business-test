@@ -1,16 +1,17 @@
 services:
   nginx:
-    image: nginx:alpine
+    image: localhost:5000/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: nginx-proxy
     restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      # Папка для конфигураций Nginx
+      # Папка для конфигураций Nginx (оставляем как переопределение, если нужно)
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      # Папка для статики фронтенда (когда он появится)
-      #- ./frontend/dist:/var/www/frontend:ro 
     networks:
       - public_net
       - internal_net
@@ -64,25 +65,31 @@ services:
     image: containrrr/watchtower:latest
     container_name: watchtower
     restart: always
-    environment:
-      - DOCKER_API_VERSION=1.54
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # Монтируем ПАПКУ с конфигом, а не сам файл
+      - /root/.docker:/config:ro
+    environment:
+      - DOCKER_API_VERSION=${DOCKER_API_VERSION}
+      - DOCKER_CONFIG=/config
     # Проверяет обновления каждые 5 минут (300 секунд) и очищает старые образы:
     command: --interval 300 --cleanup
     networks:
       - public_net
 
-  # backend:
-  #   image: localhost:5000/backend_api:latest
-  #   container_name: backend-api
-  #   restart: always
-  #   environment:
-  #     - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-  #   networks:
-  #     - internal_net
-  #   depends_on:
-  #     - postgres
+  backend:
+    image: localhost:5000/backend_api:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-api
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - internal_net # Порт не пробрасывается — только внутри машины через Nginx
+    depends_on:
+      - postgres
 
 networks:
   public_net:
