@@ -228,6 +228,8 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
+input[type="number"],
+input[type="password"],
 textarea,
 select {
   background: rgba(255, 255, 255, 0.04);
@@ -253,7 +255,8 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--gold);
-  background: rgba(201, 168, 76, 0.06);
+  background: rgba(201, 168, 76, 0.1) !important;
+  color: var(--text) !important;
   box-shadow: 0 0 0 3px var(--gold-dim);
 }
 
@@ -261,6 +264,16 @@ input.invalid,
 textarea.invalid {
   border-color: var(--error);
   box-shadow: 0 0 0 3px rgba(224, 92, 92, 0.15);
+}
+
+/* Fix for browser autofill (dark background, light text) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1a1820 inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 select option { background: #1a1820; }
@@ -393,13 +406,15 @@ textarea { resize: vertical; min-height: 90px; }
 
 .btn-back,
 .btn-next,
-.btn-submit {
+.btn-submit,
+.btn-primary,
+.btn-secondary {
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.75rem 1.8rem;
+  padding: 0.95rem 2rem;
   border-radius: 999px;
   cursor: pointer;
   transition: var(--transition);
@@ -429,13 +444,26 @@ textarea { resize: vertical; min-height: 90px; }
   box-shadow: 0 0 20px var(--gold-glow);
 }
 
-.btn-submit {
+.btn-submit,
+.btn-primary {
   background: linear-gradient(135deg, var(--gold) 0%, #a07830 100%);
-  color: #13110e;
+  color: #13110e !important;
   font-weight: 600;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--text);
 }
 
 .btn-submit:hover {

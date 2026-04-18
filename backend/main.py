@@ -7,7 +7,9 @@ from core.database import engine, Base
 from routes.leads import router as leads_router
 from routes.metrics import router as metrics_router
 from routes.admin_config import router as admin_config_router
-
+from routes.auth import router as auth_router
+import models.admin_user  # Need to import this for Base.metadata.create_all
+import models.analytics
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -41,6 +43,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 API_PREFIX = "/api/v1"
 
+app.include_router(auth_router, prefix=API_PREFIX)
 app.include_router(leads_router, prefix=API_PREFIX)
 app.include_router(metrics_router, prefix=API_PREFIX)
 app.include_router(admin_config_router, prefix=API_PREFIX)

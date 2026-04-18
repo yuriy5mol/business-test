@@ -1,0 +1,343 @@
+/* Admin specific styles */
+
+.admin-wrapper {
+  max-width: 1800px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.admin-card {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.dashboard-wide {
+  width: 100%;
+}
+
+.admin-dashboard-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dashboard-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px;
+  border-radius: var(--radius-sm);
+}
+
+.tab-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  background: var(--accent-light);
+  color: white;
+  box-shadow: 0 4px 12px rgba(230, 201, 168, 0.15);
+}
+
+.dashboard-content {
+  display: block;
+}
+
+.config-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 12px 15px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr {
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+.badge.active {
+  background: rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+}
+.badge.inactive {
+  background: rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.dashboard-card h3 {
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+.dashboard-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.btn-logout {
+  background: rgba(255, 90, 90, 0.1);
+  color: #ff5a5a;
+  border: 1px solid rgba(255, 90, 90, 0.2);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 90, 90, 0.2);
+}
+
+.loader-spinner {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+/* ============================================================
+   Analytics Dashboard Modal
+   ============================================================ */
+.analytics-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analytics-overlay[hidden] {
+  display: none !important;
+}
+
+.analytics-modal-content {
+  width: 90vw;
+  height: 90vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  overflow: hidden;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(0,0,0,0.2);
+}
+
+.btn-close {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-close:hover {
+  color: var(--gold);
+}
+
+.analytics-stats {
+  display: flex;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--gold-light);
+}
+
+.heatmap-container {
+  flex: 1;
+  position: relative;
+  background: #0f0d14;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heatmap-mock-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mock-header {
+  width: 60%;
+  height: 40px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.mock-card {
+  width: 400px;
+  height: 500px;
+  background: #fff;
+  border-radius: 12px;
+}
+
+#heatmap-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  border-radius: 8px;
+}
+
+/* ============================================================
+   CRM Leads Dashboard
+   ============================================================ */
+.leads-card {
+  min-height: 500px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.badge-high {
+  background: rgba(255, 50, 50, 0.15);
+  color: #ff5555;
+  border: 1px solid rgba(255, 50, 50, 0.3);
+}
+
+.badge-medium {
+  background: rgba(255, 170, 0, 0.15);
+  color: #ffaa00;
+  border: 1px solid rgba(255, 170, 0, 0.3);
+}
+
+.badge-low {
+  background: rgba(50, 150, 255, 0.15);
+  color: #55aaff;
+  border: 1px solid rgba(50, 150, 255, 0.3);
+}

@@ -5,3 +5,7 @@ sqlalchemy[asyncio]
 pydantic
 pydantic-settings
 python-multipart
+# Auth
+PyJWT
+bcrypt<4.0.0
+passlib[bcrypt]

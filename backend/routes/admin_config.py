@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 
 from core.database import get_db
+from core.security import get_current_admin
 from models import admin_config as crud
 
 router = APIRouter(prefix="/admin/config", tags=["admin"])
@@ -46,7 +47,7 @@ class ConfigRead(ConfigCreate):
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=ConfigRead)
 async def create_config(
-    body: ConfigCreate, db: AsyncSession = Depends(get_db)
+    body: ConfigCreate, db: AsyncSession = Depends(get_db), admin: str = Depends(get_current_admin)
 ):
     """Add a new service / budget config entry."""
     return await crud.create_config(db, body.model_dump())
@@ -71,7 +72,7 @@ async def get_config(config_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.patch("/{config_id}", response_model=ConfigRead)
 async def update_config(
-    config_id: int, body: ConfigUpdate, db: AsyncSession = Depends(get_db)
+    config_id: int, body: ConfigUpdate, db: AsyncSession = Depends(get_db), admin: str = Depends(get_current_admin)
 ):
     updated = await crud.update_config(
         db, config_id, body.model_dump(exclude_none=True)
@@ -82,7 +83,7 @@ async def update_config(
 
 
 @router.delete("/{config_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_config(config_id: int, db: AsyncSession = Depends(get_db)) -> None:
+async def delete_config(config_id: int, db: AsyncSession = Depends(get_db), admin: str = Depends(get_current_admin)) -> None:
     deleted = await crud.delete_config(db, config_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Config not found")

@@ -12,16 +12,21 @@ screenshots/
 frontend/node_modules/
 frontend/dist/
 
-# Backend
+# Python / Environment
+__pycache__/
+*.pyc
+.venv/
+backend/.venv/
 backend/__pycache__/
 backend/*.pyc
-backend/.venv/
-backend/.env
 
 # Системные файлы
 .DS_Store
 Thumbs.db
 
-# Логи
+# Логи и база данных (pgdata/pgadmin не должны коммититься)
 *.log
 logs/
+pgdata/
+pgadmin_data/
+registry_data/
